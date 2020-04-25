@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-map xmlns="http://cayenne.apache.org/schema/9/modelMap"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://cayenne.apache.org/schema/9/modelMap https://cayenne.apache.org/schema/9/modelMap.xsd"
+          project-version="9">
+    <property name="defaultPackage" value="com.metrobg.netmanager.persistent"/>
+    <property name="defaultSchema" value="netmanage"/>
+    <db-entity name="CUSTOMER_INFO" schema="NETMANAGE">
+        <db-attribute name="CUSTOMER_ADDRESS_1" type="VARCHAR" length="55"/>
+        <db-attribute name="CUSTOMER_ADDRESS_2" type="VARCHAR" length="25"/>
+        <db-attribute name="CUSTOMER_CITY" type="VARCHAR" isMandatory="true" length="25"/>
+        <db-attribute name="CUSTOMER_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="CUSTOMER_NAME" type="VARCHAR" isMandatory="true" length="55"/>
+        <db-attribute name="CUSTOMER_PHONE" type="VARCHAR" isMandatory="true" length="15"/>
+        <db-attribute name="CUSTOMER_STATE" type="VARCHAR" length="2"/>
+        <db-attribute name="CUSTOMER_ZIP" type="VARCHAR" length="5"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>CUSTOMER_ID_SEQ</db-generator-name>
+        </db-key-generator>
+    </db-entity>
+    <db-entity name="DEVICE_TYPE" schema="NETMANAGE">
+        <db-attribute name="DEVICE_TYPE_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="DEVICE_TYPE_NAME" type="VARCHAR" isMandatory="true" length="35"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>DEVICE_TYPE_SEQ</db-generator-name>
+        </db-key-generator>
+    </db-entity>
+    <db-entity name="HOST_INTERFACES" schema="NETMANAGE">
+        <db-attribute name="CUSTOMER_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="DEVICE_TYPE_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="DNS_A_RECORD" type="VARCHAR" length="25"/>
+        <db-attribute name="HOST_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="INTERFACE_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="INTERFACE_IP_ADDRESS" type="VARCHAR" length="15"/>
+        <db-attribute name="INTERFACE_NAME" type="VARCHAR" length="25"/>
+        <db-attribute name="INTERFACE_TYPE" type="VARCHAR" isMandatory="true" length="25"/>
+        <db-attribute name="NETWORK_DEVICE_DEVICE_TYPE_ID" type="INTEGER" isMandatory="true" length="4"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>INTERFACE_ID_SEQ</db-generator-name>
+        </db-key-generator>
+    </db-entity>
+    <db-entity name="HOST_SERVICES" schema="NETMANAGE">
+        <db-attribute name="CUSTOMER_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="DEVICE_TYPE_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="HOST_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="NETWORK_DEVICE_DEVICE_TYPE_ID" type="INTEGER" isMandatory="true" length="4"/>
+        <db-attribute name="SERVICE_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>service_id_seq</db-generator-name>
+        </db-key-generator>
+    </db-entity>
+    <db-entity name="HOST_SERVICE_TYPES" schema="NETMANAGE">
+        <db-attribute name="SERVICE_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="SERVICE_NAME" type="VARCHAR" isMandatory="true" length="25"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>host_service_seq</db-generator-name>
+        </db-key-generator>
+    </db-entity>
+    <db-entity name="NETWORK_DEVICE" schema="NETMANAGE">
+        <db-attribute name="CUSTOMER_ID" type="INTEGER" isMandatory="true" length="4"/>
+        <db-attribute name="DEVICE_CREDENTIALS" type="VARCHAR" length="25"/>
+        <db-attribute name="DEVICE_PASSWORD" type="VARCHAR" length="25"/>
+        <db-attribute name="DEVICE_TYPE_ID" type="INTEGER" isMandatory="true" length="4"/>
+        <db-attribute name="HOST_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="HOST_NAME" type="VARCHAR" length="25"/>
+        <db-attribute name="HOST_NOTES" type="VARCHAR" length="1024"/>
+        <db-attribute name="OS_ID" type="INTEGER" isMandatory="true" length="4"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>DEVICE.SEQ</db-generator-name>
+        </db-key-generator>
+    </db-entity>
+    <db-entity name="OS_TYPE" schema="NETMANAGE">
+        <db-attribute name="OS_ID" type="INTEGER" isPrimaryKey="true" isMandatory="true" length="4"/>
+        <db-attribute name="OS_NAME" type="VARCHAR" isMandatory="true" length="35"/>
+        <db-key-generator>
+            <db-generator-type>ORACLE</db-generator-type>
+            <db-generator-name>os_id_seq</db-generator-name>
+        </db-key-generator>
+    </db-entity>
+    <db-entity name="STATES" schema="NETMANAGE">
+        <db-attribute name="STATE_ID" type="VARCHAR" isPrimaryKey="true" isMandatory="true" length="2"/>
+        <db-attribute name="STATE_NAME" type="VARCHAR" isMandatory="true" length="75"/>
+    </db-entity>
+    <obj-entity name="CustomerInfo" className="com.metrobg.netmanager.persistent.CustomerInfo"
+                dbEntityName="CUSTOMER_INFO">
+        <obj-attribute name="customerAddress1" type="java.lang.String" db-attribute-path="CUSTOMER_ADDRESS_1"/>
+        <obj-attribute name="customerAddress2" type="java.lang.String" db-attribute-path="CUSTOMER_ADDRESS_2"/>
+        <obj-attribute name="customerCity" type="java.lang.String" db-attribute-path="CUSTOMER_CITY"/>
+        <obj-attribute name="customerName" type="java.lang.String" db-attribute-path="CUSTOMER_NAME"/>
+        <obj-attribute name="customerPhone" type="java.lang.String" db-attribute-path="CUSTOMER_PHONE"/>
+        <obj-attribute name="customerState" type="java.lang.String" db-attribute-path="CUSTOMER_STATE"/>
+        <obj-attribute name="customerZip" type="java.lang.String" db-attribute-path="CUSTOMER_ZIP"/>
+    </obj-entity>
+    <obj-entity name="DeviceType" className="com.metrobg.netmanager.persistent.DeviceType" dbEntityName="DEVICE_TYPE">
+        <obj-attribute name="deviceTypeName" type="java.lang.String" db-attribute-path="DEVICE_TYPE_NAME"/>
+    </obj-entity>
+    <obj-entity name="HostInterfaces" className="com.metrobg.netmanager.persistent.HostInterfaces"
+                dbEntityName="HOST_INTERFACES">
+        <obj-attribute name="dnsARecord" type="java.lang.String" db-attribute-path="DNS_A_RECORD"/>
+        <obj-attribute name="interfaceIpAddress" type="java.lang.String" db-attribute-path="INTERFACE_IP_ADDRESS"/>
+        <obj-attribute name="interfaceName" type="java.lang.String" db-attribute-path="INTERFACE_NAME"/>
+        <obj-attribute name="interfaceType" type="java.lang.String" db-attribute-path="INTERFACE_TYPE"/>
+        <obj-attribute name="networkDeviceDeviceTypeId" type="int" db-attribute-path="NETWORK_DEVICE_DEVICE_TYPE_ID"/>
+    </obj-entity>
+    <obj-entity name="HostServiceTypes" className="com.metrobg.netmanager.persistent.HostServiceTypes"
+                dbEntityName="HOST_SERVICE_TYPES">
+        <obj-attribute name="serviceName" type="java.lang.String" db-attribute-path="SERVICE_NAME"/>
+    </obj-entity>
+    <obj-entity name="HostServices" className="com.metrobg.netmanager.persistent.HostServices"
+                dbEntityName="HOST_SERVICES">
+        <obj-attribute name="networkDeviceDeviceTypeId" type="int" db-attribute-path="NETWORK_DEVICE_DEVICE_TYPE_ID"/>
+    </obj-entity>
+    <obj-entity name="NetworkDevice" className="com.metrobg.netmanager.persistent.NetworkDevice"
+                dbEntityName="NETWORK_DEVICE">
+        <obj-attribute name="deviceCredentials" type="java.lang.String" db-attribute-path="DEVICE_CREDENTIALS"/>
+        <obj-attribute name="devicePassword" type="java.lang.String" db-attribute-path="DEVICE_PASSWORD"/>
+        <obj-attribute name="hostId" type="int" db-attribute-path="HOST_ID"/>
+        <obj-attribute name="hostName" type="java.lang.String" db-attribute-path="HOST_NAME"/>
+        <obj-attribute name="hostNotes" type="java.lang.String" db-attribute-path="HOST_NOTES"/>
+    </obj-entity>
+    <obj-entity name="OsType" className="com.metrobg.netmanager.persistent.OsType" dbEntityName="OS_TYPE">
+        <obj-attribute name="osName" type="java.lang.String" db-attribute-path="OS_NAME"/>
+    </obj-entity>
+    <obj-entity name="States" className="com.metrobg.netmanager.persistent.States" dbEntityName="STATES">
+        <obj-attribute name="stateName" type="java.lang.String" db-attribute-path="STATE_NAME"/>
+    </obj-entity>
+    <db-relationship name="networkDevices" source="CUSTOMER_INFO" target="NETWORK_DEVICE" toMany="true">
+        <db-attribute-pair source="CUSTOMER_ID" target="CUSTOMER_ID"/>
+    </db-relationship>
+    <db-relationship name="networkDevices" source="DEVICE_TYPE" target="NETWORK_DEVICE" toMany="true">
+        <db-attribute-pair source="DEVICE_TYPE_ID" target="DEVICE_TYPE_ID"/>
+    </db-relationship>
+    <db-relationship name="customer" source="NETWORK_DEVICE" target="CUSTOMER_INFO" toMany="false">
+        <db-attribute-pair source="CUSTOMER_ID" target="CUSTOMER_ID"/>
+    </db-relationship>
+    <db-relationship name="deviceType" source="NETWORK_DEVICE" target="DEVICE_TYPE" toMany="false">
+        <db-attribute-pair source="DEVICE_TYPE_ID" target="DEVICE_TYPE_ID"/>
+    </db-relationship>
+    <db-relationship name="os" source="NETWORK_DEVICE" target="OS_TYPE" toMany="false">
+        <db-attribute-pair source="OS_ID" target="OS_ID"/>
+    </db-relationship>
+    <db-relationship name="networkDevices" source="OS_TYPE" target="NETWORK_DEVICE" toMany="true">
+        <db-attribute-pair source="OS_ID" target="OS_ID"/>
+    </db-relationship>
+    <obj-relationship name="networkDevices" source="CustomerInfo" target="NetworkDevice" deleteRule="Deny"
+                      db-relationship-path="networkDevices"/>
+    <obj-relationship name="networkDevices" source="DeviceType" target="NetworkDevice" deleteRule="Deny"
+                      db-relationship-path="networkDevices"/>
+    <obj-relationship name="customer" source="NetworkDevice" target="CustomerInfo" deleteRule="Nullify"
+                      db-relationship-path="customer"/>
+    <obj-relationship name="deviceType" source="NetworkDevice" target="DeviceType" deleteRule="Nullify"
+                      db-relationship-path="deviceType"/>
+    <obj-relationship name="os" source="NetworkDevice" target="OsType" deleteRule="Nullify" db-relationship-path="os"/>
+    <obj-relationship name="networkDevices" source="OsType" target="NetworkDevice" deleteRule="Deny"
+                      db-relationship-path="networkDevices"/>
+</data-map>
